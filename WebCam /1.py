@@ -1,5 +1,22 @@
 import face_recognition
 import cv2
+import requests
+import simplejson as json
+import datetime
+
+API_ENDPOINT = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webresources/com.areatecnica.plaza_segura_restful.entities.alerta/"
+
+API_ENDPOINTPERSONA = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webresources/com.areatecnica.plaza_segura_restful.entities.alerta/"
+
+
+# your API key here
+API_KEY = "XXXXXXXXXXXXXXXXX"
+  
+switch = {
+        "Ian Concha": 1,
+        "Romina Torres":2,
+        "Eduardo Navarro":3
+    }
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
@@ -14,21 +31,27 @@ import cv2
 video_capture = cv2.VideoCapture(0)
 
 # Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("ian.jpg")
+obama_image = face_recognition.load_image_file("ian.jpeg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
-biden_image = face_recognition.load_image_file("romina.jpg")
+biden_image = face_recognition.load_image_file("romina.jpeg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
+
+# Load a second sample picture and learn how to recognize it.
+eduardo_image = face_recognition.load_image_file("eduardo.jpeg")
+eduardo_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
     obama_face_encoding,
-    biden_face_encoding
+    biden_face_encoding,
+    eduardo_face_encoding
 ]
 known_face_names = [
     "Ian Concha",
-    "Romina Torress"
+    "Romina Torres",
+    "Eduardo Navarro"
 ]
 
 # Initialize some variables
@@ -57,12 +80,25 @@ while True:
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
-            name = "Unknown"
+            name = "Desconocido"
 
             # If a match was found in known_face_encodings, just use the first one.
             if True in matches:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
+
+                # your source code here
+                data = {'alertaIdTipo': 3, 'alertaIdCamara': 2, 'alertaDescripcion':name}
+                headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+                r = requests.post(API_ENDPOINT, data=json.dumps(data), headers=headers)
+
+                idPersona = switch.get(name, "no reconocido")
+
+                print("Se ha identificado a "+name)
+                print("Id "+str(idPersona))
+
+                pastebin = r.text
+                print(pastebin)
 
             face_names.append(name)
 
