@@ -9,13 +9,12 @@ API_ENDPOINT = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webreso
 API_ENDPOINTPERSONA = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webresources/com.areatecnica.plaza_segura_restful.entities.alerta/"
 
 
-# your API key here
+# your API key here 
 API_KEY = "XXXXXXXXXXXXXXXXX"
   
 switch = {
         "Ian Concha": 1,
-        "Romina Torres":2,
-        "Eduardo Navarro":3
+        "Romina Torres":2
     }
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
@@ -31,27 +30,21 @@ switch = {
 video_capture = cv2.VideoCapture(0)
 
 # Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("ian.jpeg")
+obama_image = face_recognition.load_image_file("ian.jpg")
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
-biden_image = face_recognition.load_image_file("romina.jpeg")
+biden_image = face_recognition.load_image_file("romina.jpg")
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
-
-# Load a second sample picture and learn how to recognize it.
-eduardo_image = face_recognition.load_image_file("eduardo.jpeg")
-eduardo_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
     obama_face_encoding,
-    biden_face_encoding,
-    eduardo_face_encoding
+    biden_face_encoding
 ]
 known_face_names = [
     "Ian Concha",
-    "Romina Torres",
-    "Eduardo Navarro"
+    "Romina Torres"
 ]
 
 # Initialize some variables
