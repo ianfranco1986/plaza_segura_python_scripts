@@ -19,8 +19,8 @@ local_path = 'home/image.jpg'
 
 
 #Tamaño de la captura
-height=480*3
-width=640*3
+height=480*2
+width=640*2
 
 
 def upload():

@@ -3,6 +3,7 @@ import cv2
 import requests
 import simplejson as json
 import datetime
+import time
 
 API_ENDPOINT = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webresources/com.areatecnica.plaza_segura_restful.entities.alerta/"
 
@@ -27,25 +28,26 @@ switch = {
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get a reference to webcam #0 (the default one)
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture('http://192.168.0.30:8160')
 
-# Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("ian.jpg")
-obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
+def load_faces():
+    # Load a sample picture and learn how to recognize it.
+    obama_image = face_recognition.load_image_file("ian.jpg")
+    obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-# Load a second sample picture and learn how to recognize it.
-biden_image = face_recognition.load_image_file("romina.jpg")
-biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
+    # Load a second sample picture and learn how to recognize it.
+    biden_image = face_recognition.load_image_file("romina.jpg")
+    biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 
-# Create arrays of known face encodings and their names
-known_face_encodings = [
-    obama_face_encoding,
-    biden_face_encoding
-]
-known_face_names = [
-    "Ian Concha",
-    "Romina Torres"
-]
+    # Create arrays of known face encodings and their names
+    known_face_encodings = [
+        obama_face_encoding,
+        biden_face_encoding
+    ]
+    known_face_names = [
+        "Ian Concha",
+        "Romina Torres"
+    ]
 
 # Initialize some variables
 face_locations = []
@@ -53,7 +55,11 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 
+load_faces()
+
 while True:
+    
+
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
@@ -116,6 +122,8 @@ while True:
 
     # Display the resulting image
     cv2.imshow('Video', frame)
+
+
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
