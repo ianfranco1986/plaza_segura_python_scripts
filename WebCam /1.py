@@ -28,7 +28,7 @@ switch = {
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get a reference to webcam #0 (the default one)
-video_capture = cv2.VideoCapture('http://192.168.0.30:8160')
+video_capture = cv2.VideoCapture('http://192.168.0.18:8160')
 
 def load_faces():
     # Load a sample picture and learn how to recognize it.

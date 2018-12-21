@@ -6,8 +6,8 @@ from base_camera import BaseCamera
 
 class Camera(BaseCamera):
     
-    ENDPOINT = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webresources/com.areatecnica.plaza_segura_restful.entities.alerta/"
-    video_source = 'http://192.168.43.129:8160'
+    ENDPOINT = "http://www.areatecnica.cl:28080/plaza_segura_restful-1.0/webresources/alerta/"
+    video_source = 'http://192.168.0.18:8160'
     face_locations = []
     face_encodings = []
     face_names = []
