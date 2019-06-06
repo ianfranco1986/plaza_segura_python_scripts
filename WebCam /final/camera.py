@@ -34,47 +34,39 @@ class Camera(BaseCamera):
 
         process_this_frame = True
 
-        obama_image = face_recognition.load_image_file("ian.jpg")
-        obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
+        ian = face_recognition.load_image_file("ian.jpg")
+        ian_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
-            # Load a second sample picture and learn how to recognize it.
-        biden_image = face_recognition.load_image_file("romina.jpg")
-        biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
-
-            # Create arrays of known face encodings and their names
         known_face_encodings = [
-            obama_face_encoding,
-            biden_face_encoding
+            ian_face_encoding,
+            otro_face_encoding
         ]
 
         known_face_names = [
-            "Ian Concha",
-            "Romina Torres"
+            "Ian Concha"
         ]
 
         switch = {
-            "Ian Concha": 1,
-            "Romina Torres":2
+            "Ian Concha": 1
         }
 
         while True:
-            # read current frame
             _, img = camera.read()
 
             small_frame = cv2.resize(img, (0, 0), fx=0.25, fy=0.25)
 
-            # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+            
             rgb_small_frame = small_frame[:, :, ::-1]
 
-            # Only process every other frame of video to save time
+           
             if process_this_frame:
-                # Find all the faces and face encodings in the current frame of video
+               
                 face_locations = face_recognition.face_locations(rgb_small_frame)
                 face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
                 face_names = []
                 for face_encoding in face_encodings:
-                    # See if the face is a match for the known face(s)
+                    
                     matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
                     name = "Desconocido"
 
